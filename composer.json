@@ -14,8 +14,7 @@
         "symfony/runtime": "6.0.*",
         "symfony/yaml": "6.0.*"
     },
-    "require-dev": {
-    },
+    "require-dev": {},
     "config": {
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
@@ -65,6 +64,9 @@
         "symfony": {
             "allow-contrib": false,
             "require": "6.0.*"
+        },
+        "runtime": {
+            "dotenv_path": ".env"
         }
     }
 }
