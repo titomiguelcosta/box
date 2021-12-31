@@ -5,7 +5,7 @@ namespace Deployer;
 require 'recipe/common.php';
 
 set('application', 'box');
-set('repository', 'git@github.com:titomiguelcosta/box.git');
+set('repository', 'https://github.com/titomiguelcosta/box.git');
 set('git_tty', true);
 
 // Shared files/dirs between deploys 
@@ -25,6 +25,7 @@ host('titomiguelcosta.com')
 // Tasks
 desc('Update docker');
 task('docker', function () {
+    run('cd {{deploy_path}} && git pull');
     run('cd {{deploy_path}}/current && docker-compose up --force-recreate --build --no-deps -d');
     run('docker image prune -f');
     run('cd {{deploy_path}}/current && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
