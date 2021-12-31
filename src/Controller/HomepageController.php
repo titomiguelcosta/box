@@ -27,7 +27,7 @@ class HomepageController extends AbstractController
         $this->entityManager->flush();
 
         return $this->json([
-            'message' => 'Wish me luck!!!',
+            'message' => 'I am tracking you!!!',
         ]);
     }
 }

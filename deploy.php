@@ -30,6 +30,7 @@ task('docker', function () {
     run('docker image prune -f');
     run('cd {{deploy_path}} && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
     run('cd {{deploy_path}} && docker-compose exec -T php-fpm php bin/console cache:clear');
+    run('cd {{deploy_path}} && docker-compose exec -T php-fpm php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration');
 });
 
 desc('Deploy your project');
