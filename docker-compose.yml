@@ -13,6 +13,7 @@ services:
       build: 
         context: ./docker/php-fpm
         dockerfile: Dockerfile
+      image: box:php-fpm
       working_dir: /application
       volumes:
         - .:/application

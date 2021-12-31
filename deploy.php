@@ -25,7 +25,7 @@ host('titomiguelcosta.com')
 // Tasks
 desc('Update docker');
 task('docker', function () {
-    run('cd {{release_path}} && docker-compose up --force-recreate --build -d');
+    run('cd {{release_path}} && docker-compose up --force-recreate --build --no-deps -d');
     run('docker image prune -f');
     run('cd {{release_path}} && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
     run('cd {{release_path}} && docker-compose exec -T php-fpm php bin/console cache:clear');
