@@ -27,7 +27,6 @@ desc('Update docker');
 task('docker', function () {
     run('cd {{release_path}} && docker-compose up --force-recreate --build -d');
     run('docker image prune -f');
-    run('docker cp {{release_path}}/../../shared/.env.local box-php-fpm:/application/.env.local');
     run('cd {{release_path}} && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
     run('cd {{release_path}} && docker-compose exec -T php-fpm php bin/console cache:clear');
 });
