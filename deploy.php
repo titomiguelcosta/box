@@ -11,10 +11,10 @@ set('git_tty', true);
 // Shared files/dirs between deploys 
 set('shared_files', []);
 set('shared_dirs', []);
-
 set('writable_dirs', []);
 set('allow_anonymous_stats', false);
 
+set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
 
 host('titomiguelcosta.com')
     ->user('ubuntu')
