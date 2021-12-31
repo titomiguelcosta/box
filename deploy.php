@@ -25,10 +25,10 @@ host('titomiguelcosta.com')
 // Tasks
 desc('Update docker');
 task('docker', function () {
-    run('cd {{release_path}} && docker-compose up --force-recreate --build --no-deps -d');
+    run('cd {{deploy_path}}/current && docker-compose up --force-recreate --build --no-deps -d');
     run('docker image prune -f');
-    run('cd {{release_path}} && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
-    run('cd {{release_path}} && docker-compose exec -T php-fpm php bin/console cache:clear');
+    run('cd {{deploy_path}}/current && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
+    run('cd {{deploy_path}}/current && docker-compose exec -T php-fpm php bin/console cache:clear');
 });
 
 desc('Deploy your project');
@@ -42,10 +42,10 @@ task('deploy', [
     'deploy:writable',
     'deploy:vendors',
     'deploy:clear_paths',
-    'docker',
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
+    'docker',
     'success'
 ]);
 

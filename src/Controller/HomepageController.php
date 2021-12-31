@@ -12,7 +12,7 @@ class HomepageController extends AbstractController
     public function index(): Response
     {
         return $this->json([
-            'message' => 'Wish me luck',
+            'message' => 'Another attempt',
         ]);
     }
 }
