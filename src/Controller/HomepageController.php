@@ -12,7 +12,7 @@ class HomepageController extends AbstractController
     public function index(): Response
     {
         return $this->json([
-            'message' => 'Welcome to Box new controller!',
+            'message' => 'Wish me luck',
         ]);
     }
 }
