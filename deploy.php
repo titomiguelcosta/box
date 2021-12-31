@@ -22,14 +22,14 @@ host('titomiguelcosta.com')
     ->set('deploy_path', '/mnt/websites/box')
     ->set('writable_mode', 'acl');
 
-
 // Tasks
 desc('Update docker');
 task('docker', function () {
     run('cd {{release_path}} && docker-compose up --force-recreate --build -d');
     run('docker image prune -f');
-    run('docker-compose exec -it box-php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
-    run('docker-compose exec -it box-php-fpm php bin/console cache:clear --env=prod');
+    run('cd {{release_path}} && docker cp ../../shared/.env.local box-php-fpm:/application/.env.local');
+    run('docker-compose exec php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
+    run('docker-compose exec php-fpm php bin/console cache:clear');
 });
 
 desc('Deploy your project');
