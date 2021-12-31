@@ -9,8 +9,8 @@ set('repository', 'git@github.com:titomiguelcosta/box.git');
 set('git_tty', true);
 
 // Shared files/dirs between deploys 
-set('shared_files', ['.env.local']);
-set('shared_dirs', ['var/log', 'var/sessions', 'vendor']);
+set('shared_files', []);
+set('shared_dirs', []);
 
 set('writable_dirs', []);
 set('allow_anonymous_stats', false);
@@ -27,9 +27,9 @@ desc('Update docker');
 task('docker', function () {
     run('cd {{release_path}} && docker-compose up --force-recreate --build -d');
     run('docker image prune -f');
-    run('cd {{release_path}} && docker cp ../../shared/.env.local box-php-fpm:/application/.env.local');
-    run('docker-compose exec php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
-    run('docker-compose exec php-fpm php bin/console cache:clear');
+    run('docker cp {{release_path}}/../../shared/.env.local box-php-fpm:/application/.env.local');
+    run('cd {{release_path}} && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
+    run('cd {{release_path}} && docker-compose exec -T php-fpm php bin/console cache:clear');
 });
 
 desc('Deploy your project');
