@@ -26,10 +26,10 @@ host('titomiguelcosta.com')
 desc('Update docker');
 task('docker', function () {
     run('cd {{deploy_path}} && git pull');
-    run('cd {{deploy_path}}/current && docker-compose up --force-recreate --build --no-deps -d');
+    run('cd {{deploy_path}} && docker-compose up --force-recreate --build --no-deps -d');
     run('docker image prune -f');
-    run('cd {{deploy_path}}/current && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
-    run('cd {{deploy_path}}/current && docker-compose exec -T php-fpm php bin/console cache:clear');
+    run('cd {{deploy_path}} && docker-compose exec -T php-fpm composer install --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader');
+    run('cd {{deploy_path}} && docker-compose exec -T php-fpm php bin/console cache:clear');
 });
 
 desc('Deploy your project');
@@ -37,6 +37,3 @@ task('deploy', [
     'docker',
     'success'
 ]);
-
-// [Optional] If deploy fails automatically unlock.
-after('deploy:failed', 'deploy:unlock');
